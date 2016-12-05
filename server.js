@@ -11,14 +11,14 @@ app.get('/:date', function(req, res) {
   var inputDate = req.params.date;
   var naturalDate, unixDate;
 
-  if (!isNaN(inputDate)) {
-    unixDate = Number(inputDate)*1000;
-    naturalDate = strftime('%B %d, %Y', new Date(unixDate));
+  if (!isNaN(inputDate)) {  // If input date is a number
+    unixDate = Number(inputDate);
+    naturalDate = strftime('%B %d, %Y', new Date(unixDate * 1000));
   } else {
     naturalDate = inputDate;
-    unixDate = Date.parse(naturalDate);
+    unixDate = Date.parse(naturalDate) / 1000;
     if (isNaN(unixDate)) {
-      naturalDate = null;
+      unixDate = naturalDate = null;
     }
   }
 
